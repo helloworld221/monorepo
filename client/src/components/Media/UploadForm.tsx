@@ -13,20 +13,17 @@ const UploadForm: React.FC<UploadFormProps> = ({ onUpload, uploading }) => {
   const [customFileName, setCustomFileName] = useState<string>("");
   const [isEditingName, setIsEditingName] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const MAX_NAME_LENGTH = 50; // Maximum length for filename
+  const MAX_NAME_LENGTH = 50;
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
-      // Get the file and set it as selected
       const file = files[0];
       setSelectedFile(file);
 
-      // Initialize custom filename with the original name (without extension)
       const extension = file.name.split(".").pop() || "";
       const nameWithoutExtension = file.name.replace(`.${extension}`, "");
 
-      // Set custom filename and limit it to MAX_NAME_LENGTH
       setCustomFileName(nameWithoutExtension.substring(0, MAX_NAME_LENGTH));
       setError(null);
     }
@@ -47,15 +44,12 @@ const UploadForm: React.FC<UploadFormProps> = ({ onUpload, uploading }) => {
     setDragOver(false);
     const files = e.dataTransfer.files;
     if (files && files.length > 0) {
-      // Get the file and set it as selected
       const file = files[0];
       setSelectedFile(file);
 
-      // Initialize custom filename with the original name (without extension)
       const extension = file.name.split(".").pop() || "";
       const nameWithoutExtension = file.name.replace(`.${extension}`, "");
 
-      // Set custom filename and limit it to MAX_NAME_LENGTH
       setCustomFileName(nameWithoutExtension.substring(0, MAX_NAME_LENGTH));
       setError(null);
     }
@@ -88,16 +82,13 @@ const UploadForm: React.FC<UploadFormProps> = ({ onUpload, uploading }) => {
     }
 
     try {
-      // If the custom filename is empty, use the original filename
       const finalName =
         customFileName.trim() || selectedFile.name.split(".")[0];
 
-      // Create a new file with the custom name
       const extension = selectedFile.name.split(".").pop() || "";
 
       await onUpload(selectedFile, `${finalName}.${extension}`);
 
-      // Reset the form
       setSelectedFile(null);
       setCustomFileName("");
       setIsEditingName(false);
@@ -112,12 +103,11 @@ const UploadForm: React.FC<UploadFormProps> = ({ onUpload, uploading }) => {
   };
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // Limit the name to MAX_NAME_LENGTH characters
     setCustomFileName(e.target.value.substring(0, MAX_NAME_LENGTH));
   };
 
   const handleEditClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent triggering the parent's onClick
+    e.stopPropagation();
     setIsEditingName(true);
   };
 

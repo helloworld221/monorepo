@@ -32,12 +32,6 @@ app.use(
   })
 );
 
-app.use((req, _res, next) => {
-  console.log("Request cookies:", req?.headers.cookie);
-  console.log("Session ID on request:", req?.sessionID);
-  next();
-});
-
 app.use(loggerMiddleware);
 app.set("trust proxy", 1);
 app.use(express.json());

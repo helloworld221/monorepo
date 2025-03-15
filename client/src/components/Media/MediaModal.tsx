@@ -31,25 +31,20 @@ const MediaModal: React.FC<MediaModalProps> = ({
   const [isMobile, setIsMobile] = useState(false);
   const [isImageLarge, setIsImageLarge] = useState(false);
 
-  // Check for mobile viewport on component mount and window resize
   useEffect(() => {
     const checkMobileView = () => {
       setIsMobile(window.innerWidth <= 768);
     };
 
-    // Initial check
     checkMobileView();
 
-    // Add resize listener
     window.addEventListener("resize", checkMobileView);
 
-    // Cleanup
     return () => {
       window.removeEventListener("resize", checkMobileView);
     };
   }, []);
 
-  // Check if image is larger than viewport and needs scrolling
   useEffect(() => {
     if (isImage) {
       const img = new Image();
@@ -63,26 +58,21 @@ const MediaModal: React.FC<MediaModalProps> = ({
     }
   }, [isImage, media.url]);
 
-  // Prevent clicks inside the modal content from closing the modal
   const handleContentClick = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
 
-  // Handle touch events for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
     e.stopPropagation();
   };
 
-  // Toggle properties display
   const toggleProperties = (e: React.MouseEvent) => {
     e.stopPropagation();
     setShowProperties(!showProperties);
   };
 
-  // Start playing video when modal opens
   useEffect(() => {
     if (isVideo && videoRef.current) {
-      // Small timeout to ensure DOM is ready
       const timeoutId = setTimeout(() => {
         if (videoRef.current) {
           videoRef.current.play().catch((err) => {
@@ -95,7 +85,6 @@ const MediaModal: React.FC<MediaModalProps> = ({
     }
   }, [isVideo]);
 
-  // Close modal when escape key is pressed
   useEffect(() => {
     const handleEscKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -104,12 +93,10 @@ const MediaModal: React.FC<MediaModalProps> = ({
     };
 
     document.addEventListener("keydown", handleEscKey);
-    // Disable scrolling on the body while modal is open
     document.body.style.overflow = "hidden";
 
     return () => {
       document.removeEventListener("keydown", handleEscKey);
-      // Re-enable scrolling when modal is closed
       document.body.style.overflow = "auto";
     };
   }, [onClose]);
@@ -176,7 +163,6 @@ const MediaModal: React.FC<MediaModalProps> = ({
           )}
         </div>
 
-        {/* Always show properties on mobile, toggle on desktop */}
         {(showProperties || isMobile) && (
           <div className="media-properties-panel">
             <div className="properties-content">

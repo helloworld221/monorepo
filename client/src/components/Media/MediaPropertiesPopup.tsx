@@ -25,7 +25,6 @@ const MediaPropertiesPopup: React.FC<MediaPropertiesPopupProps> = ({
 }) => {
   const popupRef = useRef<HTMLDivElement>(null);
 
-  // Handle clicks outside the popup to close it
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
       if (popupRef.current && !popupRef.current.contains(e.target as Node)) {
@@ -40,26 +39,19 @@ const MediaPropertiesPopup: React.FC<MediaPropertiesPopupProps> = ({
     };
   }, [onClose]);
 
-  // Position the popup centered to its parent element
   useEffect(() => {
     if (popupRef.current && parentRef?.current) {
       const parentRect = parentRef.current.getBoundingClientRect();
 
-      // Wait for the popup to render fully to get its actual dimensions
       setTimeout(() => {
         if (popupRef.current) {
           const popupRect = popupRef.current.getBoundingClientRect();
-
-          // Calculate position to center the popup horizontally
           const leftPosition = (parentRect.width - popupRect.width) / 2;
-
-          // Ensure the popup doesn't extend beyond viewport edges
           const parentLeftOffset = parentRect.left;
           const viewportWidth = window.innerWidth;
 
           let adjustedLeft = leftPosition;
 
-          // Check if popup would extend beyond right edge of viewport
           if (
             parentLeftOffset + leftPosition + popupRect.width >
             viewportWidth
@@ -70,18 +62,13 @@ const MediaPropertiesPopup: React.FC<MediaPropertiesPopupProps> = ({
             );
           }
 
-          // Check if popup would extend beyond left edge of viewport
           if (parentLeftOffset + leftPosition < 0) {
             adjustedLeft = -parentLeftOffset;
           }
 
-          // Apply the calculated position
           popupRef.current.style.left = `${adjustedLeft}px`;
-
-          // Position above the parent by default
           popupRef.current.style.bottom = `${parentRect.height}px`;
 
-          // If popup would go beyond top of viewport, position it below parent instead
           if (parentRect.top - popupRect.height < 0) {
             popupRef.current.style.bottom = "auto";
             popupRef.current.style.top = `${parentRect.height}px`;
@@ -93,7 +80,6 @@ const MediaPropertiesPopup: React.FC<MediaPropertiesPopupProps> = ({
 
   return (
     <>
-      {/* Semi-transparent overlay to prevent clicking on other elements */}
       <div className="properties-overlay" onClick={onClose} />
 
       <div

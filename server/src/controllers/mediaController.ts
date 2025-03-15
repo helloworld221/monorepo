@@ -8,7 +8,6 @@ import logger from "../utils/logger";
 
 export const uploadMediaHandler = async (req: Request, res: Response) => {
   try {
-    console.log("req.file", req.file);
     const media = await uploadMedia(req);
     res.status(201).json({
       message: "Created: Media uploaded successfully",

@@ -25,19 +25,14 @@ const MediaItem: React.FC<MediaItemProps> = ({ media, onDelete }) => {
   const mediaItemRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Check for mobile viewport on component mount and window resize
   useEffect(() => {
     const checkMobileView = () => {
       setIsMobile(window.innerWidth <= 768);
     };
 
-    // Initial check
     checkMobileView();
-
-    // Add resize listener
     window.addEventListener("resize", checkMobileView);
 
-    // Cleanup
     return () => {
       window.removeEventListener("resize", checkMobileView);
     };
@@ -71,7 +66,6 @@ const MediaItem: React.FC<MediaItemProps> = ({ media, onDelete }) => {
 
   const handlePopupOpen = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // If on mobile, just open the modal instead of the popup
     if (isMobile) {
       setModalOpen(true);
     } else {

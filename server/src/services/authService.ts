@@ -2,7 +2,6 @@ import { Request } from "express";
 import logger from "../utils/logger";
 
 export const getCurrentUser = (req: Request) => {
-  console.log("getCurrentUser", req?.user, req?.session);
   if (req.isAuthenticated && req.isAuthenticated()) {
     return {
       isAuthenticated: true,
@@ -23,7 +22,6 @@ export const logout = (req: any, callback: (err: any) => void) => {
         logger.error({ message: "Logout error", error: err });
         callback(err);
       } else {
-        // Destroy the session after successful logout
         if (req.session) {
           req.session.destroy((sessionErr) => {
             if (sessionErr) {

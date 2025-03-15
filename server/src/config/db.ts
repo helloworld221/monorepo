@@ -7,8 +7,6 @@ dotenv.config();
 const MONGODB_URI =
   env.MONGODB_URI || "mongodb://localhost:27017/media-upload-app";
 
-console.log("MONGODB_URI", MONGODB_URI);
-
 export const connectDB = async () => {
   try {
     await mongoose.connect(MONGODB_URI);

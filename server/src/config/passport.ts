@@ -25,7 +25,6 @@ passport.use(
     },
     async (_accessToken, _refreshToken, profile, done) => {
       try {
-        console.log("Google auth callback received", { profileId: profile.id });
         let user = await User.findOne({ googleId: profile.id });
 
         if (!user) {
@@ -46,25 +45,20 @@ passport.use(
 );
 
 passport.serializeUser((user: any, done) => {
-  console.log("Serializing user ID:", user._id);
-  done(null, user._id.toString());  // Only store the string ID
+  done(null, user._id.toString());
 });
 
 passport.deserializeUser(async (userOrId: string | any, done) => {
-  console.log("Deserializing:", userOrId);
   try {
     if (userOrId && typeof userOrId === "object" && userOrId._id) {
       const user = await User.findById(userOrId._id);
-      console.log("Found user from _id property:", user);
       done(null, user);
     }
     else {
       const user = await User.findById(userOrId);
-      console.log("Found user from direct ID:", user);
       done(null, user);
     }
   } catch (error) {
-    console.error("Deserialize error:", error);
     done(error, null);
   }
 });
