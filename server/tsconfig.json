@@ -11,6 +11,10 @@
         "forceConsistentCasingInFileNames": true,
         "noImplicitAny": false,
         "allowJs": true,
+        "typeRoots": [
+            "./node_modules/@types",
+            "./src/types"
+        ]
     },
     "include": [
         "src/**/*"
