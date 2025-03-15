@@ -2,6 +2,7 @@ import { Request } from "express";
 import logger from "../utils/logger";
 
 export const getCurrentUser = (req: Request) => {
+  console.log('getCurrentUser', req);
   if (req.isAuthenticated && req.isAuthenticated()) {
     return {
       isAuthenticated: true,
