@@ -33,8 +33,8 @@ app.use(
 );
 
 app.use((req, _res, next) => {
-  console.log("Request cookies:", req.headers.cookie);
-  console.log("Session ID on request:", req.sessionID);
+  console.log("Request cookies:", req?.headers.cookie);
+  console.log("Session ID on request:", req?.sessionID);
   next();
 });
 

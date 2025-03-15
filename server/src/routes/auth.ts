@@ -85,9 +85,9 @@ router.get(
  */
 
 router.get("/current-user", (req: Request, res: Response) => {
-  console.log("Raw session data in current-user:", JSON.stringify(req.session));
-  console.log("Session ID:", req.sessionID);
-  console.log("Passport in session:", req.session.passport);
+  console.log("Raw session data in current-user:", JSON.stringify(req?.session));
+  console.log("Session ID:", req?.sessionID);
+  console.log("Passport in session:", req?.session?.passport);
   console.log(
     "Is authenticated method exists:",
     typeof req.isAuthenticated === "function"

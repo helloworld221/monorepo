@@ -5,6 +5,7 @@ declare module "express-serve-static-core" {
   interface Request {
     user: any;
     session: any;
+    sessionId: any;
     isAuthenticated(): boolean;
     logout(callback?: (err?: any) => void): void;
     file?: any;
