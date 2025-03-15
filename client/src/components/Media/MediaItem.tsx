@@ -84,19 +84,27 @@ const MediaItem: React.FC<MediaItemProps> = ({ media, onDelete }) => {
 
   return (
     <>
-      <div className="media-item" onClick={handleMediaClick}>
+      <div
+        className="media-item"
+        onClick={handleMediaClick}
+        role="button"
+        tabIndex={0}
+        aria-label={`${isImage ? "Image" : "Video"}: ${
+          media.originalName || media.filename
+        }`}
+      >
         {isImage && (
           <img
             className="media-image"
             src={media.url}
-            alt={media.originalName}
+            alt={media.originalName || media.filename}
             loading="lazy"
           />
         )}
         {isVideo && (
           <div className="media-video-preview">
             <div className="video-placeholder">
-              <FaVideo size={36} />
+              <FaVideo size={28} />
               <span>Video</span>
             </div>
             <div className="video-play-icon">
@@ -106,15 +114,18 @@ const MediaItem: React.FC<MediaItemProps> = ({ media, onDelete }) => {
         )}
         <div className="media-details">
           <div className="media-filename-container">
-            <div className="media-filename" title={media.originalName}>
-              {media.originalName ?? media.filename}
+            <div
+              className="media-filename"
+              title={media.originalName || media.filename}
+            >
+              {media.originalName || media.filename}
             </div>
             <div className="media-actions" onClick={(e) => e.stopPropagation()}>
               <button
                 className="delete-button"
                 onClick={handleDelete}
                 disabled={isDeleting}
-                aria-label="Delete"
+                aria-label="Delete media"
               >
                 {isDeleting ? (
                   <span className="spinner-small"></span>
@@ -126,7 +137,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ media, onDelete }) => {
                 ref={menuButtonRef}
                 className="properties-button"
                 onClick={handlePopupOpen}
-                aria-label="Properties"
+                aria-label="Show properties"
               >
                 <FaEllipsisV />
               </button>

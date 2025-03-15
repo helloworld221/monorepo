@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { FaTimes } from "react-icons/fa";
 import { Media } from "../../types";
 
 interface MediaModalProps {
@@ -10,9 +11,15 @@ const MediaModal: React.FC<MediaModalProps> = ({ media, onClose }) => {
   const isImage = media.fileType.startsWith("image/");
   const isVideo = media.fileType.startsWith("video/");
   const videoRef = useRef<HTMLVideoElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   // Prevent clicks inside the modal content from closing the modal
   const handleContentClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
+  // Handle touch events for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
     e.stopPropagation();
   };
 
@@ -52,10 +59,25 @@ const MediaModal: React.FC<MediaModalProps> = ({ media, onClose }) => {
   }, [onClose]);
 
   return (
-    <div className="media-modal-overlay" onClick={onClose}>
-      <div className="media-modal-content" onClick={handleContentClick}>
-        <button className="media-modal-close" onClick={onClose}>
-          &times;
+    <div
+      className="media-modal-overlay"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
+      <div
+        className="media-modal-content"
+        onClick={handleContentClick}
+        onTouchStart={handleTouchStart}
+        ref={modalRef}
+      >
+        <button
+          className="media-modal-close"
+          onClick={onClose}
+          aria-label="Close modal"
+        >
+          <FaTimes />
         </button>
         <div className="media-modal-body">
           {isImage && (
@@ -63,6 +85,7 @@ const MediaModal: React.FC<MediaModalProps> = ({ media, onClose }) => {
               className="media-modal-image"
               src={media.url}
               alt={media.originalName || media.filename}
+              loading="eager"
             />
           )}
           {isVideo && (
@@ -71,6 +94,7 @@ const MediaModal: React.FC<MediaModalProps> = ({ media, onClose }) => {
               className="media-modal-video"
               controls
               playsInline
+              controlsList="nodownload"
             >
               <source src={media.url} type={media.fileType} />
               Your browser does not support the video tag.
@@ -78,7 +102,7 @@ const MediaModal: React.FC<MediaModalProps> = ({ media, onClose }) => {
           )}
         </div>
         <div className="media-modal-footer">
-          <h3 className="media-modal-title">
+          <h3 className="media-modal-title" id="modal-title">
             {media.originalName || media.filename}
           </h3>
         </div>

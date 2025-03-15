@@ -147,6 +147,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ onUpload, uploading }) => {
                     autoFocus
                     onBlur={() => setIsEditingName(false)}
                     maxLength={MAX_NAME_LENGTH}
+                    aria-label="Edit filename"
                   />
                   <small className="text-secondary">
                     {customFileName.length}/{MAX_NAME_LENGTH} characters
@@ -154,7 +155,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ onUpload, uploading }) => {
                 </div>
               ) : (
                 <div className="file-name-display">
-                  <span>
+                  <span className="filename-text">
                     {customFileName || selectedFile.name.split(".")[0]}
                   </span>
                   <span className="file-extension">
@@ -164,6 +165,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ onUpload, uploading }) => {
                     className="btn-icon"
                     onClick={handleEditClick}
                     title="Edit filename"
+                    aria-label="Edit filename"
                   >
                     <FaEdit />
                   </button>
@@ -213,6 +215,9 @@ const UploadForm: React.FC<UploadFormProps> = ({ onUpload, uploading }) => {
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           onClick={handleClick}
+          role="button"
+          tabIndex={0}
+          aria-label="Upload area. Drag and drop files or click to select files."
         >
           <div className="upload-zone-icon">
             <FaCloudUploadAlt />
@@ -241,6 +246,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ onUpload, uploading }) => {
         style={{ display: "none" }}
         accept="image/*,video/*"
         disabled={uploading}
+        aria-hidden="true"
       />
       <p className="upload-info">Supported formats: JPG, PNG, GIF, MP4</p>
     </div>
