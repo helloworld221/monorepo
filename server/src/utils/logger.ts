@@ -9,7 +9,7 @@ const logFormat = winston.format.combine(
 
 const transports: winston.transport[] = [new winston.transports.Console()];
 
-if (!env.VERCEL) {
+if (!env.RENDER) {
   transports.push(
     new DailyRotateFile({
       filename: "logs/error-%DATE%.log",
