@@ -4,7 +4,7 @@ import { S3_BUCKET_NAME, s3Client } from "../config/aws";
 import logger from "./logger";
 
 export const uploadFileToS3 = async (
-  file: Express.Multer.File,
+  file: any,
   userId: string
 ): Promise<string> => {
   const key = `uploads/${userId}/${file.originalname}`;
