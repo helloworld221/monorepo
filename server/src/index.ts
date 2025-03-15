@@ -58,6 +58,27 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
+app.get("/health", (req: Request, res: Response) => {
+  const healthCheck = {
+    status: "ok",
+    message: "OK",
+    uptime: process.uptime(),
+    timestamp: Date.now(),
+    environment: env.NODE_ENV,
+    version: process.env.npm_package_version || "1.0.0",
+  };
+
+  try {
+    res.status(200).json(healthCheck);
+    logger.info({ message: "Health check successful", data: healthCheck });
+  } catch (error) {
+    healthCheck.status = "error";
+    healthCheck.message = (error as Error).message;
+    res.status(503).json(healthCheck);
+    logger.error({ message: "Health check failed", error });
+  }
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api/media", mediaRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
