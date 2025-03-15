@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FaEllipsisV, FaPlay, FaTrashAlt, FaVideo } from "react-icons/fa";
 import useMedia from "../../hooks/useMedia";
 import { Media } from "../../types";
+import DeleteConfirmation from "./DeleteConfirmation";
 import MediaModal from "./MediaModal";
 import MediaPropertiesPopup from "./MediaPropertiesPopup";
 
@@ -18,14 +19,39 @@ const MediaItem: React.FC<MediaItemProps> = ({ media, onDelete }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const mediaItemRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const handleDelete = async () => {
+  // Check for mobile viewport on component mount and window resize
+  useEffect(() => {
+    const checkMobileView = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    // Initial check
+    checkMobileView();
+
+    // Add resize listener
+    window.addEventListener("resize", checkMobileView);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", checkMobileView);
+    };
+  }, []);
+
+  const handleDeleteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowDeleteConfirmation(true);
+  };
+
+  const handleConfirmDelete = async () => {
     try {
       setIsDeleting(true);
       await deleteMedia(media._id);
-
       setIsDeleted(true);
 
       if (onDelete) {
@@ -35,12 +61,22 @@ const MediaItem: React.FC<MediaItemProps> = ({ media, onDelete }) => {
       console.error("Failed to delete media:", error);
     } finally {
       setIsDeleting(false);
+      setShowDeleteConfirmation(false);
     }
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteConfirmation(false);
   };
 
   const handlePopupOpen = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setPopupOpen(true);
+    // If on mobile, just open the modal instead of the popup
+    if (isMobile) {
+      setModalOpen(true);
+    } else {
+      setPopupOpen(true);
+    }
   };
 
   const handlePopupClose = () => {
@@ -89,6 +125,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ media, onDelete }) => {
         onClick={handleMediaClick}
         role="button"
         tabIndex={0}
+        ref={mediaItemRef}
         aria-label={`${isImage ? "Image" : "Video"}: ${
           media.originalName || media.filename
         }`}
@@ -123,7 +160,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ media, onDelete }) => {
             <div className="media-actions" onClick={(e) => e.stopPropagation()}>
               <button
                 className="delete-button"
-                onClick={handleDelete}
+                onClick={handleDeleteClick}
                 disabled={isDeleting}
                 aria-label="Delete media"
               >
@@ -135,7 +172,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ media, onDelete }) => {
               </button>
               <button
                 ref={menuButtonRef}
-                className="properties-button"
+                className="properties-button desktop-only"
                 onClick={handlePopupOpen}
                 aria-label="Show properties"
               >
@@ -144,7 +181,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ media, onDelete }) => {
             </div>
           </div>
           <div className="media-date">{formatDate(media.createdAt)}</div>
-          {popupOpen && (
+          {popupOpen && !isMobile && (
             <div className="popup-container" ref={popupRef}>
               <MediaPropertiesPopup media={media} onClose={handlePopupClose} />
             </div>
@@ -152,7 +189,21 @@ const MediaItem: React.FC<MediaItemProps> = ({ media, onDelete }) => {
         </div>
       </div>
 
-      {modalOpen && <MediaModal media={media} onClose={handleModalClose} />}
+      {modalOpen && (
+        <MediaModal
+          media={media}
+          onClose={handleModalClose}
+          showPropertiesByDefault={isMobile}
+        />
+      )}
+
+      {showDeleteConfirmation && (
+        <DeleteConfirmation
+          filename={media.originalName || media.filename}
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
     </>
   );
 };
