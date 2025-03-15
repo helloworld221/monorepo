@@ -16,7 +16,7 @@ export const getCurrentUser = (req: Request) => {
   }
 };
 
-export const logout = (req: Request, callback: (err: any) => void) => {
+export const logout = (req: any, callback: (err: any) => void) => {
   if (req.logout) {
     req.logout((err) => {
       if (err) {
