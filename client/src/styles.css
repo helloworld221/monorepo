@@ -796,226 +796,77 @@ button,
 }
 
 /* Responsive styles */
-@media (max-width: 992px) {
+@media (max-width: 768px) {
+  /* Enhance existing mobile styles */
   .container {
     padding: 0 0.75rem;
   }
-
+  
   .media-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .navbar .container {
-    padding: 0 1rem;
-  }
-
-  .card {
-    padding: 1rem;
-  }
-
-  .media-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 0.75rem;
-    margin-top: 1rem;
   }
-
-  .media-image,
-  .media-video-preview {
-    height: 150px;
-  }
-
-  .upload-zone {
-    padding: 1.5rem 1rem;
-  }
-
+  
   .upload-zone-icon {
     font-size: 1.5rem;
-    margin-bottom: 0.75rem;
   }
-
-  .selected-file-container {
+  
+  .upload-zone-text p {
+    font-size: 0.9rem;
+  }
+  
+  .card {
     padding: 1rem;
+    margin-bottom: 1rem;
   }
-
-  .selected-file-actions {
-    flex-direction: column;
-    gap: 0.5rem;
+  
+  .navbar .container {
+    padding: 0 0.75rem;
   }
-
-  .selected-file-actions .btn {
-    width: 100%;
-  }
-
-  .media-modal-content {
-    max-width: 95%;
-    max-height: 95%;
-  }
-
-  .media-modal-image,
-  .media-modal-video {
-    max-height: 70vh;
-  }
-}
-
-@media (max-width: 576px) {
+  
   .navbar-brand {
     font-size: 1.25rem;
   }
+  
+  /* Fix media modal for mobile */
+  .media-modal-content {
+    width: 95%;
+    max-height: 80vh;
+  }
+}
 
+@media (max-width: 480px) {
   .media-grid {
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 0.5rem;
   }
-
-  .media-image,
-  .media-video-preview {
+  
+  .media-item img, 
+  .media-item .media-video-preview {
     height: 120px;
   }
-
-  .media-details {
-    padding: 0.5rem;
-  }
-
+  
   .media-filename {
     font-size: 0.75rem;
     max-width: 70%;
   }
-
+  
   .media-date {
-    font-size: 0.65rem;
+    font-size: 0.7rem;
   }
-
-  .delete-button,
-  .properties-button {
+  
+  .media-actions button {
     padding: 3px;
-    font-size: 1em;
-  }
-
-  .video-play-icon {
-    width: 36px;
-    height: 36px;
-  }
-
-  .empty-state {
-    padding: 2rem 1rem;
-  }
-
-  .empty-state-icon {
-    font-size: 2.5rem;
-  }
-
-  .login-container {
-    margin: 1.5rem auto;
-  }
-
-  .media-properties-popup {
-    min-width: auto;
-    max-width: 95%;
-    left: 50%;
-    transform: translate(-50%, -100%);
-  }
-
-  .popup-header h2 {
     font-size: 0.9rem;
   }
-
-  .file-name-display {
-    font-size: 0.9rem;
-  }
-
-  /* Full-width modals on mobile */
-  .media-modal-overlay {
-    padding: 10px;
-  }
-
-  .media-modal-content {
-    max-width: 100%;
-    width: 100%;
-    max-height: 100%;
-    display: flex;
+  
+  /* Improve upload form on small screens */
+  .selected-file-actions {
     flex-direction: column;
+    gap: 0.5rem;
   }
-
-  .media-modal-body {
-    max-height: calc(90vh - 70px);
-  }
-
-  .media-modal-footer {
-    padding: 10px;
-  }
-}
-
-/* Touch-friendly enhancements */
-@media (hover: none) {
-  .btn,
-  .dropdown-item,
-  .media-item {
-    transition: none;
-  }
-
-  .btn:active,
-  .btn-primary:active {
-    background-color: var(--primary-hover);
-    transform: scale(0.98);
-  }
-
-  .dropdown-item:active {
-    background-color: var(--bg-color);
-  }
-
-  .media-item:active {
-    transform: scale(0.98);
-  }
-
-  /* Increase tap target sizes */
-  .delete-button,
-  .properties-button,
-  .close-btn {
-    min-width: 32px;
-    min-height: 32px;
-  }
-
-  .media-modal-close {
-    width: 40px;
-    height: 40px;
-  }
-}
-
-/* Fix for iOS Safari 100vh issue */
-.media-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 100%;
-  height: -webkit-fill-available;
-}
-
-/* Prevent overscrolling on modals */
-.media-modal-body {
-  overscroll-behavior: contain;
-}
-
-/* Fix for sticky hover state on mobile */
-@media (hover: hover) {
-  .btn:hover {
-    background-color: var(--primary-hover);
-  }
-
-  .btn-outline:hover {
-    background-color: var(--primary-color);
-    color: white;
-  }
-
-  .dropdown-item:hover {
-    background-color: var(--bg-color);
-  }
-
-  .media-item:hover {
-    transform: scale(1.02);
+  
+  .selected-file-actions button {
+    width: 100%;
   }
 }
