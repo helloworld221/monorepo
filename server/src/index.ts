@@ -35,7 +35,7 @@ app.use(
 app.use(loggerMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.set('trust proxy', 1);
 app.use(
   session({
     secret: env.SESSION_SECRET,
@@ -69,7 +69,7 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
-app.get("/health", (req: Request, res: Response) => {
+app.get("/health", (_req: Request, res: Response) => {
   const healthCheck = {
     status: "ok",
     message: "OK",

@@ -9,8 +9,7 @@ dotenv.config();
 const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID || "";
 const GOOGLE_CLIENT_SECRET = env.GOOGLE_CLIENT_SECRET || "";
 const CALLBACK_URL =
-  env.GOOGLE_CALLBACK_URL ||
-  "http://localhost:5000/api/auth/google/callback";
+  env.GOOGLE_CALLBACK_URL || "http://localhost:5000/api/auth/google/callback";
 
 if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
   console.error("Missing Google OAuth credentials");
@@ -26,6 +25,7 @@ passport.use(
     },
     async (_accessToken, _refreshToken, profile, done) => {
       try {
+        console.log("Google auth callback received", { profileId: profile.id });
         let user = await User.findOne({ googleId: profile.id });
 
         if (!user) {
