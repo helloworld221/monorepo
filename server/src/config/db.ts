@@ -4,13 +4,13 @@ import { env } from "./env";
 
 dotenv.config();
 
-const MONGO_URI = env.MONGO_URI || "mongodb://localhost:27017/media-upload-app";
+const MONGODB_URI = env.MONGODB_URI || "mongodb://localhost:27017/media-upload-app";
 
-console.log("MONGO_URI", MONGO_URI);
+console.log("MONGODB_URI", MONGODB_URI);
 
 export const connectDB = async () => {
   try {
-    await mongoose.connect(MONGO_URI, {
+    await mongoose.connect(MONGODB_URI, {
       serverSelectionTimeoutMS: 20000,
       connectTimeoutMS: 30000,
       socketTimeoutMS: 45000,
