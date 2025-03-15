@@ -11,13 +11,13 @@
         "forceConsistentCasingInFileNames": true,
         "noImplicitAny": false,
         "allowJs": true,
+        "typeRoots": [
+            "./node_modules/@types",
+            "./types"
+        ],
     },
     "include": [
-        "src/**/*"
+        "src/**/*",
+        "types/**/*"
     ],
-    "types": [
-        "node",
-        "express",
-        "Multer"
-    ]
 }

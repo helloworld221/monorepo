@@ -6,7 +6,7 @@ export const isAuthenticated = (
   res: Response,
   next: NextFunction
 ) => {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated && req.isAuthenticated()) {
     return next();
   }
   logger.warn({ message: "Authentication failed", url: req.url });

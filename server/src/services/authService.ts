@@ -2,7 +2,7 @@ import { Request } from "express";
 import logger from "../utils/logger";
 
 export const getCurrentUser = (req: Request) => {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated && req.isAuthenticated()) {
     return {
       isAuthenticated: true,
       user: req.user,
@@ -16,12 +16,17 @@ export const getCurrentUser = (req: Request) => {
 };
 
 export const logout = (req: Request, callback: (err: any) => void) => {
-  req.logout((err) => {
-    if (err) {
-      logger.error({ message: "Logout error", error: err });
-      callback(err);
-    } else {
-      callback(null);
-    }
-  });
+  if (req.logout) {
+    req.logout((err) => {
+      if (err) {
+        logger.error({ message: "Logout error", error: err });
+        callback(err);
+      } else {
+        callback(null);
+      }
+    });
+  } else {
+    logger.warn({ message: "Logout method not available" });
+    callback(new Error("Logout method not available"));
+  }
 };

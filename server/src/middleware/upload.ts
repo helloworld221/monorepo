@@ -1,15 +1,9 @@
 import multer from "multer";
-import logger from "../utils/logger"; // Import Winston logger
+import logger from "../utils/logger";
 
-// Configure storage as memory storage
 const storage = multer.memoryStorage();
 
-// File filter function to validate media types
-const fileFilter = (
-  req: Express.Request,
-  file: Express.Multer.File,
-  cb: multer.FileFilterCallback
-) => {
+const fileFilter = (_req: any, file: any, cb: any) => {
   const allowedTypes = [
     "image/jpeg",
     "image/png",
