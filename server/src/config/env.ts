@@ -16,6 +16,7 @@ const envSchema = Joi.object({
   GOOGLE_CLIENT_ID: Joi.string().required(),
   GOOGLE_CLIENT_SECRET: Joi.string().required(),
   GOOGLE_CALLBACK_URL: Joi.string().uri().required(),
+  VERCEL: Joi.string().required(),
 }).unknown();
 
 const { value: envVars, error } = envSchema.validate(process.env);
@@ -37,4 +38,5 @@ export const env = {
   GOOGLE_CLIENT_ID: envVars.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: envVars.GOOGLE_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL: envVars.GOOGLE_CALLBACK_URL,
+  VERCEL: envVars.VERCEL,
 };
