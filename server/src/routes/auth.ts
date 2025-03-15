@@ -45,8 +45,21 @@ router.get(
   passport.authenticate("google", {
     failureRedirect: env.CLIENT_URL + "/login?error=authfailed",
   }),
-  (_req: Request, res: Response) => {
-    res.redirect(env.CLIENT_URL || "http://localhost:3000");
+  (req: Request, res: Response) => {
+    console.log("Auth callback - Session data:", req?.session);
+    console.log("Auth callback - Passport in session:", req?.session?.passport);
+    console.log("Auth callback - User in request:", req?.user);
+
+    req.session.save((err) => {
+      if (err) {
+        console.error("Error saving session:", err);
+      }
+      console.log(
+        "Session saved, contains passport:",
+        req.session.passport ? "yes" : "no"
+      );
+      res.redirect(env.CLIENT_URL || "http://localhost:3000");
+    });
   }
 );
 
@@ -70,7 +83,21 @@ router.get(
  *                   type: object
  *                   nullable: true
  */
-router.get("/current-user", getCurrentUserHandler);
+
+router.get("/current-user", (req: Request, res: Response) => {
+  console.log("Raw session data in current-user:", JSON.stringify(req.session));
+  console.log("Session ID:", req.sessionID);
+  console.log("Passport in session:", req.session.passport);
+  console.log(
+    "Is authenticated method exists:",
+    typeof req.isAuthenticated === "function"
+  );
+  console.log(
+    "Is authenticated result:",
+    req.isAuthenticated ? req.isAuthenticated() : "N/A"
+  );
+  getCurrentUserHandler(req, res);
+});
 
 /**
  * @swagger
