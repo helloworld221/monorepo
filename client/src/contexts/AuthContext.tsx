@@ -44,7 +44,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = () => {
     window.location.href = `${
-      import.meta.env.VITE_API_URL || "http://localhost:5000"
+      import.meta.env.VITE_API_URL || "http://localhost:5000/api"
     }/auth/google`;
   };
 
