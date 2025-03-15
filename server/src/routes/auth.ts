@@ -44,6 +44,7 @@ router.get(
   "/google/callback",
   passport.authenticate("google", {
     failureRedirect: env.CLIENT_URL + "/login?error=authfailed",
+    session: true,
   }),
   (req: Request, res: Response) => {
     console.log("Auth callback - Session data:", req?.session);
