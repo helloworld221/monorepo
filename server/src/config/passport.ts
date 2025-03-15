@@ -50,12 +50,19 @@ passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-passport.deserializeUser(async (id, done) => {
-  console.log("Deserializing user ID:", id);
+passport.deserializeUser(async (userOrId: string | any, done) => {
+  console.log("Deserializing:", userOrId);
   try {
-    const user = await User.findById(id);
-    console.log("Found user:", user);
-    done(null, user);
+    if (userOrId && typeof userOrId === "object" && userOrId._id) {
+      const user = await User.findById(userOrId._id);
+      console.log("Found user from _id property:", user);
+      done(null, user);
+    }
+    else {
+      const user = await User.findById(userOrId);
+      console.log("Found user from direct ID:", user);
+      done(null, user);
+    }
   } catch (error) {
     console.error("Deserialize error:", error);
     done(error, null);

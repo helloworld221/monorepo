@@ -54,7 +54,6 @@ app.use(
       secure: env.NODE_ENV === "production",
       maxAge: 24 * 60 * 60 * 1000,
       sameSite: env.NODE_ENV === "production" ? "none" : "lax",
-      httpOnly: true,
       domain: env.NODE_ENV === "production" ? ".onrender.com" : undefined,
     },
   } as SessionOptions)
