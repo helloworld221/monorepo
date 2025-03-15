@@ -35,7 +35,7 @@ app.use(
 app.use(loggerMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.set('trust proxy', 1);
+app.set("trust proxy", 1);
 app.use(
   session({
     secret: env.SESSION_SECRET,
@@ -51,8 +51,11 @@ app.use(
       },
     }),
     cookie: {
+      secure: env.NODE_ENV === "production",
       maxAge: 24 * 60 * 60 * 1000,
       sameSite: env.NODE_ENV === "production" ? "none" : "lax",
+      httpOnly: true,
+      domain: env.NODE_ENV === "production" ? ".onrender.com" : undefined,
     },
   } as SessionOptions)
 );
