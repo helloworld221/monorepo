@@ -6,6 +6,7 @@ import { useAuth } from "../../hooks/useAuth";
 const Login: React.FC = () => {
   const { login, error, isAuthenticated, loading } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [isLeaving, setIsLeaving] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,6 +14,21 @@ const Login: React.FC = () => {
       navigate("/", { replace: true });
     }
   }, [isAuthenticated, loading, navigate]);
+
+  useEffect(() => {
+    if (error) {
+      setIsLeaving(false);
+      const timer = setTimeout(() => {
+        closeAlert();
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
+
+  const closeAlert = () => {
+    setIsLeaving(true);
+  };
 
   const handleLogin = async () => {
     setIsLoading(true);
@@ -28,7 +44,20 @@ const Login: React.FC = () => {
     <div className="login-container">
       <div className="card">
         <h2>Welcome to Media App</h2>
-        {error && <div className="alert alert-danger">{error}</div>}
+        {error && (
+          <div
+            className={`alert alert-danger ${isLeaving ? "alert-closing" : ""}`}
+          >
+            <span className="alert-message">{error}</span>
+            <button
+              type="button"
+              className="alert-close-btn"
+              onClick={closeAlert}
+            >
+              &times;
+            </button>
+          </div>
+        )}
         <p>Sign in to upload and manage your media files</p>
         <button
           className="login-btn"

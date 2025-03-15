@@ -1,4 +1,10 @@
-import React, { ChangeEvent, DragEvent, useRef, useState } from "react";
+import React, {
+  ChangeEvent,
+  DragEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { FaCloudUploadAlt, FaEdit } from "react-icons/fa";
 
 interface UploadFormProps {
@@ -9,11 +15,27 @@ interface UploadFormProps {
 const UploadForm: React.FC<UploadFormProps> = ({ onUpload, uploading }) => {
   const [dragOver, setDragOver] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isLeaving, setIsLeaving] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [customFileName, setCustomFileName] = useState<string>("");
   const [isEditingName, setIsEditingName] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const MAX_NAME_LENGTH = 50;
+
+  useEffect(() => {
+    if (error) {
+      setIsLeaving(false);
+      const timer = setTimeout(() => {
+        closeAlert();
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
+
+  const closeAlert = () => {
+    setIsLeaving(true);
+  };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -120,7 +142,20 @@ const UploadForm: React.FC<UploadFormProps> = ({ onUpload, uploading }) => {
   return (
     <div className="card">
       <h2 className="card-title">Upload Media</h2>
-      {error && <div className="alert alert-danger">{error}</div>}
+      {error && (
+        <div
+          className={`alert alert-danger ${isLeaving ? "alert-closing" : ""}`}
+        >
+          <span className="alert-message">{error}</span>
+          <button
+            type="button"
+            className="alert-close-btn"
+            onClick={closeAlert}
+          >
+            &times;
+          </button>
+        </div>
+      )}
 
       {selectedFile ? (
         <div className="selected-file-container">

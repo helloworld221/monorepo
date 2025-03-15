@@ -170,12 +170,39 @@ button,
   padding: 0.75rem 1rem;
   border-radius: var(--radius-sm);
   margin-bottom: 1rem;
+  transition: all 500ms ease-out;
+  max-height: 100px;
+  transform: scale(1);
+  opacity: 1;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alert-message {
+  flex-grow: 1;
 }
 
 .alert-danger {
   background-color: rgba(239, 68, 68, 0.1);
   color: var(--danger-color);
   border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.alert-closing {
+  max-height: 0;
+  transform: scale(0.95);
+  opacity: 0;
+  padding: 0 15px;
+  margin-bottom: 0;
+}
+
+.alert-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .alert-success {

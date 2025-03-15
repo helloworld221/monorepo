@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaImage } from "react-icons/fa";
 import useMedia from "../../hooks/useMedia";
 import MediaItem from "./MediaItem";
@@ -7,10 +7,26 @@ import UploadForm from "./UploadForm";
 const MediaGrid: React.FC = () => {
   const { media, loading, error, uploading, handleUpload, fetchMedia } =
     useMedia();
+  const [isLeaving, setIsLeaving] = useState(false);
 
   useEffect(() => {
     fetchMedia();
   }, [fetchMedia]);
+
+  useEffect(() => {
+    if (error) {
+      setIsLeaving(false);
+      const timer = setTimeout(() => {
+        closeAlert();
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
+
+  const closeAlert = () => {
+    setIsLeaving(true);
+  };
 
   const handleMediaDelete = () => {
     fetchMedia();
@@ -19,7 +35,20 @@ const MediaGrid: React.FC = () => {
   return (
     <div>
       <UploadForm onUpload={handleUpload} uploading={uploading} />
-      {error && <div className="alert alert-danger">{error}</div>}
+      {error && (
+        <div
+          className={`alert alert-danger ${isLeaving ? "alert-closing" : ""}`}
+        >
+          <span className="alert-message">{error}</span>
+          <button
+            type="button"
+            className="alert-close-btn"
+            onClick={closeAlert}
+          >
+            &times;
+          </button>
+        </div>
+      )}
       {loading ? (
         <div className="loading">
           <div className="spinner"></div>
