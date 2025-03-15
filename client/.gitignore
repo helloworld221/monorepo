@@ -46,3 +46,6 @@ coverage/
 
 # Vite Cache
 .cache/
+
+#Turbo
+.turbo/
