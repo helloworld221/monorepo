@@ -38,10 +38,10 @@ const Navbar: React.FC = () => {
             <div className="user-dropdown" ref={dropdownRef}>
               <div className="user-avatar" onClick={toggleDropdown}>
                 {user.picture ? (
-                  <img src={user.picture} alt={user.displayName} />
+                  <img src={user.picture} alt={user.name} />
                 ) : (
                   <div className="avatar-placeholder">
-                    {user.displayName.charAt(0).toUpperCase()}
+                    {user.name.charAt(0).toUpperCase()}
                   </div>
                 )}
               </div>
@@ -50,15 +50,15 @@ const Navbar: React.FC = () => {
                   <div className="user-info">
                     <div className="user-avatar">
                       {user.picture ? (
-                        <img src={user.picture} alt={user.displayName} />
+                        <img src={user.picture} alt={user.name} />
                       ) : (
                         <div className="avatar-placeholder">
-                          {user.displayName.charAt(0).toUpperCase()}
+                          {user.name.charAt(0).toUpperCase()}
                         </div>
                       )}
                     </div>
                     <div className="user-info-text">
-                      <span className="user-name">{user.displayName}</span>
+                      <span className="user-name">{user.name}</span>
                       <span className="user-email">{user.email}</span>
                     </div>
                   </div>
