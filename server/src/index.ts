@@ -1,3 +1,4 @@
+import MongoStore from "connect-mongo";
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { NextFunction, Request, Response } from "express";
@@ -40,9 +41,19 @@ app.use(
     secret: env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: env.MONGODB_URI || "mongodb://localhost:27017/media-upload-app",
+      collectionName: "sessions",
+      ttl: 24 * 60 * 60,
+      autoRemove: "native",
+      crypto: {
+        secret: env.SESSION_SECRET,
+      },
+    }),
     cookie: {
       secure: env.NODE_ENV === "production",
       maxAge: 24 * 60 * 60 * 1000,
+      sameSite: env.NODE_ENV === "production" ? "none" : "lax",
     },
   } as SessionOptions)
 );
