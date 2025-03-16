@@ -47,5 +47,8 @@ coverage/
 # Vite Cache
 .cache/
 
-#Turbo
+# Turbo
 .turbo/
+
+# ESLint
+.eslintcache

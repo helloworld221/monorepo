@@ -215,7 +215,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ onUpload, uploading }) => {
             >
               {uploading ? (
                 <>
-                  <span className="spinner-small"></span>
+                  <span className="spinner-small spinner-with-text"></span>
                   <span>Uploading...</span>
                 </>
               ) : (

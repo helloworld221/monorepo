@@ -703,6 +703,10 @@ button,
   animation: spin 1s linear infinite;
 }
 
+.spinner-with-text {
+  margin-right: 0.25rem;
+}
+
 /* Upload Zone */
 .upload-zone {
   border: 0.125rem dashed var(--border-color);
