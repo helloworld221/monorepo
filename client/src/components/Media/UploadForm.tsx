@@ -82,9 +82,15 @@ const UploadForm: React.FC<UploadFormProps> = ({ onUpload, uploading }) => {
   };
 
   const validateFile = (file: File): boolean => {
-    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "video/mp4"];
+    const allowedTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/gif",
+      "video/mp4",
+      "video/webm",
+    ];
     if (!allowedTypes.includes(file.type)) {
-      setError("Only JPG, PNG, GIF and MP4 files are allowed");
+      setError("Only JPG, PNG, GIF, MP4 and WEBM files are allowed");
       return false;
     }
 
@@ -277,7 +283,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ onUpload, uploading }) => {
         disabled={uploading}
         aria-hidden="true"
       />
-      <p className="upload-info">Supported formats: JPG, PNG, GIF, MP4</p>
+      <p className="upload-info">Supported formats: JPG, PNG, GIF, MP4, WEBM</p>
     </div>
   );
 };
