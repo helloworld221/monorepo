@@ -21,9 +21,7 @@ export const uploadMedia = async (req: Request) => {
 
   const media = await Media.create({
     userId,
-    filename: req.file.filename
-      ? req.file.filename
-      : req.file.originalname,
+    filename: req.file.filename ? req.file.filename : req.file.originalname,
     originalname: req.file.originalname,
     fileType: req.file.mimetype,
     size: req.file.size,

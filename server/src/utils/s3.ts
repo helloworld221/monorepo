@@ -1,4 +1,8 @@
-import { DeleteObjectCommand, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import {
+  DeleteObjectCommand,
+  GetObjectCommand,
+  PutObjectCommand,
+} from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { S3_BUCKET_NAME, s3Client } from "../config/aws";
 import logger from "./logger";
@@ -39,7 +43,10 @@ export const getSignedFileUrl = async (key: string): Promise<string> => {
   }
 };
 
-export const deleteFileFromS3 = async (userId: string, fileName: string): Promise<void> => {
+export const deleteFileFromS3 = async (
+  userId: string,
+  fileName: string
+): Promise<void> => {
   const fullPath = `uploads/${userId}/${fileName}`;
   const command = new DeleteObjectCommand({
     Bucket: S3_BUCKET_NAME,

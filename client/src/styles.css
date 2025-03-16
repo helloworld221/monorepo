@@ -119,7 +119,9 @@ body {
   line-height: 1.6;
   color: var(--text-color);
   background-color: var(--bg-color);
-  transition: background-color var(--transition), color var(--transition);
+  transition:
+    background-color var(--transition),
+    color var(--transition);
 }
 
 a {
@@ -147,7 +149,8 @@ a {
   color: var(--text-secondary);
   background-color: transparent;
   cursor: pointer;
-  transition: background-color var(--transition-fast),
+  transition:
+    background-color var(--transition-fast),
     color var(--transition-fast);
 }
 
@@ -304,7 +307,8 @@ button,
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   font-size: var(--font-md);
-  transition: border-color var(--transition-fast),
+  transition:
+    border-color var(--transition-fast),
     box-shadow var(--transition-fast);
 }
 
@@ -463,7 +467,8 @@ button,
   color: white;
   font-size: 1.125rem;
   pointer-events: none;
-  transition: transform var(--transition-fast),
+  transition:
+    transform var(--transition-fast),
     background-color var(--transition-fast);
 }
 

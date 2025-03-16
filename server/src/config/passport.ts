@@ -53,8 +53,7 @@ passport.deserializeUser(async (userOrId: string | any, done) => {
     if (userOrId && typeof userOrId === "object" && userOrId._id) {
       const user = await User.findById(userOrId._id);
       done(null, user);
-    }
-    else {
+    } else {
       const user = await User.findById(userOrId);
       done(null, user);
     }

@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { fetchUserMedia, uploadMedia, deleteUserMedia } from "../services/media";
+import {
+  deleteUserMedia,
+  fetchUserMedia,
+  uploadMedia,
+} from "../services/media";
 import { Media } from "../types";
 
 const useMedia = () => {
@@ -49,9 +53,11 @@ const useMedia = () => {
     try {
       await deleteUserMedia(mediaId);
       setMedia((prevMedia) => prevMedia.filter((item) => item._id !== mediaId));
-      setError(null)
-    } catch (error: any) {
-      setError(error.message || "Failed to delete media");
+      setError(null);
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to delete media";
+      setError(errorMessage);
       throw error;
     }
   };

@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { checkCurrentUser, logoutUser } from "../services/auth";
 import { AuthState } from "../types";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "./AuthProvider";
 
 const defaultAuthState: AuthState = {
   isAuthenticated: false,
@@ -80,4 +80,3 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   );
 };
 export { AuthContext };
-
