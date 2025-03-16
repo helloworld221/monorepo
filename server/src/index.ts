@@ -42,7 +42,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: env.MONGODB_URI || "mongodb://localhost:27017/media-upload-app",
+      mongoUrl: env.MONGODB_URI || "mongodb://localhost:27017/web-gallery",
       collectionName: "sessions",
       ttl: 24 * 60 * 60,
       autoRemove: "native",

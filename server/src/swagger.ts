@@ -4,7 +4,7 @@ const options: swaggerJsdoc.Options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Media Upload API",
+      title: "Web Gallery API",
       version: "1.0.0",
       description: "API for media upload and user authentication",
     },

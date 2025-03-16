@@ -4,8 +4,7 @@ import { env } from "./env";
 
 dotenv.config();
 
-const MONGODB_URI =
-  env.MONGODB_URI || "mongodb://localhost:27017/media-upload-app";
+const MONGODB_URI = env.MONGODB_URI || "mongodb://localhost:27017/web-gallery";
 
 export const connectDB = async () => {
   try {

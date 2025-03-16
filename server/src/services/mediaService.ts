@@ -5,6 +5,7 @@ import {
   getSignedFileUrl,
   uploadFileToS3,
 } from "../utils/s3";
+import logger from "../utils/logger";
 
 export const uploadMedia = async (req: Request) => {
   if (!req.file) {
@@ -75,6 +76,7 @@ export const deleteMedia = async (mediaId: string, user: any) => {
     await deleteFileFromS3(user.id, media.filename);
     await Media.findByIdAndDelete(mediaId);
   } catch (error: any) {
+    logger.error({ message: "Delete media failed", error });
     throw error;
   }
 };

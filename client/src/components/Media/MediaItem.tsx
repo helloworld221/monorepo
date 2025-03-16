@@ -46,6 +46,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ media, onDelete }) => {
   const handleConfirmDelete = async () => {
     try {
       setIsDeleting(true);
+      setShowDeleteConfirmation(false);
       await deleteMedia(media._id);
       setIsDeleted(true);
 
@@ -56,7 +57,6 @@ const MediaItem: React.FC<MediaItemProps> = ({ media, onDelete }) => {
       console.error("Failed to delete media:", error);
     } finally {
       setIsDeleting(false);
-      setShowDeleteConfirmation(false);
     }
   };
 

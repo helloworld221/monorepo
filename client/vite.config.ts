@@ -1,9 +1,14 @@
-import eslintPlugin from "@nabla/vite-plugin-eslint";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import eslint from "vite-plugin-eslint2";
+import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
-  plugins: [react(), eslintPlugin()],
+  plugins: [
+    react(),
+    eslint({ include: ["src/**/*.{ts,tsx,js,jsx}"] }),
+    svgr({ include: "**/*.svg?react" }),
+  ],
   build: {
     outDir: "dist",
     sourcemap: true,

@@ -16,6 +16,7 @@ yarn-error.log*
 dist/
 build/
 .vite-plugin-pwa/
+*.tsbuildinfo
 
 # Logs
 logs/
