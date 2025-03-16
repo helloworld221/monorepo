@@ -8,6 +8,7 @@ const MediaGrid: React.FC = () => {
   const { media, loading, error, uploading, handleUpload, fetchMedia } =
     useMedia();
   const [isLeaving, setIsLeaving] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     fetchMedia();
@@ -26,6 +27,9 @@ const MediaGrid: React.FC = () => {
 
   const closeAlert = () => {
     setIsLeaving(true);
+    setTimeout(() => {
+      setIsVisible(false);
+    }, 500);
   };
 
   const handleMediaDelete = () => {
@@ -35,7 +39,7 @@ const MediaGrid: React.FC = () => {
   return (
     <div>
       <UploadForm onUpload={handleUpload} uploading={uploading} />
-      {error && (
+      {isVisible && error && (
         <div
           className={`alert alert-danger ${isLeaving ? "alert-closing" : ""}`}
         >

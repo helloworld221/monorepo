@@ -16,6 +16,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ onUpload, uploading }) => {
   const [dragOver, setDragOver] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLeaving, setIsLeaving] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [customFileName, setCustomFileName] = useState<string>("");
   const [isEditingName, setIsEditingName] = useState(false);
@@ -35,6 +36,9 @@ const UploadForm: React.FC<UploadFormProps> = ({ onUpload, uploading }) => {
 
   const closeAlert = () => {
     setIsLeaving(true);
+    setTimeout(() => {
+      setIsVisible(false);
+    }, 500);
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,7 +146,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ onUpload, uploading }) => {
   return (
     <div className="card">
       <h2 className="card-title">Upload Media</h2>
-      {error && (
+      {isVisible && error && (
         <div
           className={`alert alert-danger ${isLeaving ? "alert-closing" : ""}`}
         >

@@ -7,6 +7,7 @@ const Login: React.FC = () => {
   const { login, error, isAuthenticated, loading } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,6 +29,9 @@ const Login: React.FC = () => {
 
   const closeAlert = () => {
     setIsLeaving(true);
+    setTimeout(() => {
+      setIsVisible(false);
+    }, 500);
   };
 
   const handleLogin = async () => {
@@ -44,7 +48,7 @@ const Login: React.FC = () => {
     <div className="login-container">
       <div className="card">
         <h2>Welcome to Media App</h2>
-        {error && (
+        {isVisible && error && (
           <div
             className={`alert alert-danger ${isLeaving ? "alert-closing" : ""}`}
           >
